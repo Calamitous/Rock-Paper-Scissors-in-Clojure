@@ -1,13 +1,1 @@
-# rps_clojure
-
-FIXME: write description
-
-## Usage
-
-FIXME: write
-
-## License
-
-Copyright (C) 2011 FIXME
-
-Distributed under the Eclipse Public License, the same as Clojure.
+This is a simple engine for running various Rock, Paper, Scissors AIs against each other and aggregating the results.
