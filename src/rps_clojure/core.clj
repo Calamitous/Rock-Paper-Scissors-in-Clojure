@@ -9,18 +9,16 @@
 
     [:rock :paper] name2
     [:paper :scissors] name2
-    [:scissors :rock] name2 } completed-play 'draw))
+    [:scissors :rock] name2 } completed-play "draw"))
 
-(defn winner [previous-runs run-count player1 player2]
-  (let [player1-selection (eval (list player1 0 previous-runs))
-        player2-selection (eval (list player2 1 previous-runs))
+(defn winner [previous-runs player1 player2]
+  (let [player1-selection (eval (list player1 'first previous-runs))
+        player2-selection (eval (list player2 'last previous-runs))
         result [player1-selection player2-selection]]
   (play player1 player2 result)))
 
-(defn play-all [players]
-  (let [player1 (first players)
-        player2 (last players)]
-  (reduce #(conj %1 (winner %1 %2 player1 player2)) [] (range 99))))
+(defn play-all [playas]
+  (reduce #(conj %1 (apply winner %1 playas)) [] (range 99)))
 
 (defn calculate-wins [plays]
   (reduce #(assoc %1 %2 (inc (%1 %2 0))) {} plays))
@@ -31,8 +29,14 @@
 
 (def players `(the-randomator mr-scissors round-robin))
 
-(play-all (list (first combinations players 2)))
-; (map #(play-all (list %)) (combinations players 2))
+(defn do-plays []
+  (map play-all (combinations players 2)))
+
+(println (do-plays))
+(println "1")
+
+; (map calculate-wins (do-plays))
 
 ; (reduce #(calculate-wins (play-all %)) (combinations players 2))
 ; (reduce #(assoc %1 (calculate-wins (play-all %2))) {} (combinations players 2))
+
